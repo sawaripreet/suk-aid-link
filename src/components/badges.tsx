@@ -25,7 +25,7 @@ export function UrgencyBadge({ urgency }: { urgency: string }) {
     <span
       className={cn(
         "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide",
-        styles[urgency] ?? styles.standard,
+        styles[urgency] ?? styles["standard"],
       )}
     >
       {t(urgency)}
@@ -45,7 +45,7 @@ export function StatusBadge({ status }: { status: string }) {
     <span
       className={cn(
         "inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold",
-        styles[status] ?? styles.pending,
+        styles[status] ?? styles["pending"],
       )}
     >
       {t(status)}

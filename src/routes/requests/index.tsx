@@ -304,13 +304,19 @@ function NewRequestDialog() {
 
   const submit = async () => {
     const parsed = schema.safeParse({ ...form, units: Number(form.units) });
-    if (!parsed.success) return toast.error(parsed.error.issues[0]!.message);
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]!.message);
+      return;
+    }
     const { error } = await supabase.from("blood_requests").insert({
       ...parsed.data,
       contact_whatsapp: parsed.data.contact_whatsapp || parsed.data.contact_phone,
       requester_id: user!.id,
     });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Emergency request posted");
     setOpen(false);
     qc.invalidateQueries({ queryKey: ["requests"] });

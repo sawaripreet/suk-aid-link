@@ -102,8 +102,14 @@ function ProfilePage() {
 
   const save = async () => {
     if (!user) return;
-    if (form.full_name.trim().length < 2) return toast.error("Please enter your full name");
-    if (form.phone.trim().length < 7) return toast.error("Please enter a valid phone number");
+    if (form.full_name.trim().length < 2) {
+      toast.error("Please enter your full name");
+      return;
+    }
+    if (form.phone.trim().length < 7) {
+      toast.error("Please enter a valid phone number");
+      return;
+    }
     setSaving(true);
     const { error } = await supabase.from("profiles").upsert({
       id: user.id,
@@ -119,7 +125,10 @@ function ProfilePage() {
       updated_at: new Date().toISOString(),
     });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Profile saved");
     qc.invalidateQueries({ queryKey: ["profile"] });
     qc.invalidateQueries({ queryKey: ["donors"] });
