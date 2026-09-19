@@ -14,7 +14,137 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      blood_requests: {
+        Row: {
+          blood_group: string
+          city: string
+          condition_summary: string
+          contact_phone: string
+          contact_whatsapp: string
+          created_at: string
+          hospital: string
+          id: string
+          patient_name: string
+          requester_id: string
+          status: string
+          units: number
+          updated_at: string
+          urgency: string
+        }
+        Insert: {
+          blood_group: string
+          city?: string
+          condition_summary?: string
+          contact_phone: string
+          contact_whatsapp?: string
+          created_at?: string
+          hospital: string
+          id?: string
+          patient_name?: string
+          requester_id: string
+          status?: string
+          units?: number
+          updated_at?: string
+          urgency?: string
+        }
+        Update: {
+          blood_group?: string
+          city?: string
+          condition_summary?: string
+          contact_phone?: string
+          contact_whatsapp?: string
+          created_at?: string
+          hospital?: string
+          id?: string
+          patient_name?: string
+          requester_id?: string
+          status?: string
+          units?: number
+          updated_at?: string
+          urgency?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          area: string
+          blood_group: string | null
+          city: string
+          created_at: string
+          full_name: string
+          id: string
+          is_available: boolean
+          is_donor: boolean
+          last_donation_date: string | null
+          phone: string
+          updated_at: string
+          verified: boolean
+          whatsapp: string
+        }
+        Insert: {
+          area?: string
+          blood_group?: string | null
+          city?: string
+          created_at?: string
+          full_name?: string
+          id: string
+          is_available?: boolean
+          is_donor?: boolean
+          last_donation_date?: string | null
+          phone?: string
+          updated_at?: string
+          verified?: boolean
+          whatsapp?: string
+        }
+        Update: {
+          area?: string
+          blood_group?: string | null
+          city?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          is_available?: boolean
+          is_donor?: boolean
+          last_donation_date?: string | null
+          phone?: string
+          updated_at?: string
+          verified?: boolean
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      request_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          reporter_id: string
+          request_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_id: string
+          request_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_id?: string
+          request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "request_reports_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "blood_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
