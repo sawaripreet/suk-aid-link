@@ -10,6 +10,10 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { AuthProvider } from "@/hooks/useAuth";
+import { I18nProvider } from "@/lib/i18n";
+import { AppHeader } from "@/components/AppHeader";
+import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -77,11 +81,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "LifeLink Sukkur | Blood Donor & Emergency Request Network" },
+      {
+        name: "description",
+        content:
+          "Connect emergency blood requests with compatible, available donors across Sukkur and the region in seconds.",
+      },
+      { name: "author", content: "LifeLink Sukkur" },
+      { property: "og:title", content: "LifeLink Sukkur | Blood Donor Network" },
+      {
+        property: "og:description",
+        content: "Emergency blood requests matched to compatible donors across Sukkur.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
@@ -92,6 +103,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter+Tight:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +136,22 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <I18nProvider>
+        <AuthProvider>
+          <div className="flex min-h-screen flex-col bg-background">
+            <AppHeader />
+            {/* Required: nested routes render here. */}
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <footer className="border-t border-border/70 py-6 text-center text-xs text-muted-foreground">
+              LifeLink Sukkur — CSC-206 Software Engineering project. In a life-threatening emergency, always
+              contact your hospital blood bank directly.
+            </footer>
+          </div>
+          <Toaster position="top-center" richColors />
+        </AuthProvider>
+      </I18nProvider>
     </QueryClientProvider>
   );
 }
